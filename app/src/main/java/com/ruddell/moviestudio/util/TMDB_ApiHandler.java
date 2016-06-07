@@ -18,8 +18,7 @@ public class TMDB_ApiHandler {
     private static String mBaseUrl = "http://api.themoviedb.org/3/";
     private static final String mImageRequestBaseUrl = "http://image.tmdb.org/t/p/";
 
-    private static final String TMDB_API_KEY = "8f53d6e1af4c7cfddfe0ed6bee89d436";
-    //8f53d6e1af4c7cfddfe0ed6bee89d436
+    private static final String TMDB_API_KEY = "8f53d...d436";
     //INSERT_API_KEY_HERE
 
     public static String getTMDBUrl(String imageSize, String imagename) throws InvalidImageSizeException {
