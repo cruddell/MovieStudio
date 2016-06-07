@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="5dp">
+
+    <ImageView
+        android:layout_width="@dimen/poster_size_width"
+        android:layout_height="@dimen/poster_size_height"
+        android:id="@+id/poster_image"
+        android:layout_marginLeft="@dimen/title_padding_horizontal"
+        android:layout_marginTop="5dp"
+        android:scaleType="centerCrop" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Release Date"
+        android:id="@+id/releaseDate"
+        android:layout_alignTop="@+id/poster_image"
+        android:layout_toEndOf="@+id/poster_image"
+        android:layout_marginLeft="@dimen/movie_details_margin_left" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Rating:"
+        android:id="@+id/ratingView"
+        android:layout_below="@+id/releaseDate"
+        android:layout_alignStart="@+id/releaseDate" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/description"
+        android:layout_below="@+id/poster_image"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="@dimen/overview_margin_left"
+        android:layout_marginRight="@dimen/overview_margin_left"
+        android:layout_marginTop="@dimen/overview_margin_top"
+        android:layout_marginBottom="@dimen/overview_margin_top"
+        android:text="description" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@color/primary_dark_material_dark"
+        android:layout_below="@+id/description"
+        android:layout_marginLeft="@dimen/overview_margin_left"
+        android:layout_marginRight="@dimen/overview_margin_left"
+        android:id="@+id/dividerLine">
+
+    </View>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Trailers:"
+        android:id="@+id/textView5"
+        android:layout_below="@+id/dividerLine"
+        android:layout_marginLeft="@dimen/overview_margin_left"
+        android:layout_marginTop="@dimen/overview_margin_top" />
+</RelativeLayout>

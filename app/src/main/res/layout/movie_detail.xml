@@ -1,0 +1,45 @@
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <LinearLayout
+        android:id="@+id/main_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="New Text"
+            android:id="@+id/movieTitle"
+            android:background="@color/primary_orange_500"
+            android:paddingTop="@dimen/title_padding_vertical"
+            android:paddingBottom="@dimen/title_padding_vertical"
+            android:paddingLeft="@dimen/title_padding_horizontal"
+            android:paddingRight="@dimen/title_padding_horizontal"
+            android:textSize="35sp"
+            android:textColor="@color/primary_orange_50" />
+
+
+
+        <ListView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/trailerList" />
+    </LinearLayout>
+
+    <android.support.design.widget.FloatingActionButton
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_gravity="bottom|right"
+        android:layout_marginRight="@dimen/fab_margin_right"
+        android:id="@+id/fabButton"
+        android:src="@drawable/empty_star"
+        android:tint="#ffffff"
+        android:scaleType="center"
+        android:layout_marginBottom="@dimen/fab_margin_bottom" />
+</FrameLayout>
