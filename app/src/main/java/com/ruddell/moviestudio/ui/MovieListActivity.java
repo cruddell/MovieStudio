@@ -1,12 +1,15 @@
 package com.ruddell.moviestudio.ui;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.wifi.WifiManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Parcelable;
@@ -101,16 +104,39 @@ public class MovieListActivity extends AppCompatActivity {
                 int viewToUse = mSelectedView;
                 mSelectedView = ViewByFavorites;
                 queryFavorites();
-                new MoviesAsyncTask(viewToUse).execute();
+                if (TMDB_ApiHandler.networkIsAvailable(this)) new MoviesAsyncTask(viewToUse).execute();
             }
         } else {
             //start with assumption we have no internet access, so show favorites
             //if internet is detected, show popular movies
             mSelectedView = ViewByFavorites;
             queryFavorites();
-            new MoviesAsyncTask(ViewByPopularity).execute();
+            mSelectedView = ViewByPopularity;
+            if (TMDB_ApiHandler.networkIsAvailable(this)) new MoviesAsyncTask(ViewByPopularity).execute();
         }
 
+        //register broadcast receiver to detect network changes
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
+
+        registerReceiver(new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                ConnectivityManager connMgr = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+                NetworkInfo wifi = connMgr.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+                NetworkInfo mobile = connMgr.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+
+                boolean isConnected = wifi != null && wifi.isConnectedOrConnecting() ||
+                        mobile != null && mobile.isConnectedOrConnecting();
+                if (isConnected) {
+                    Log.d("Network Available ", "YES");
+                    int viewToUse = mSelectedView;
+                    new MoviesAsyncTask(viewToUse).execute();
+                } else {
+                    Log.d("Network Available ", "NO");
+                }
+            }
+        }, intentFilter);
 
 
         //get screen size

@@ -154,28 +154,30 @@ public class MovieDetailFragment extends Fragment implements View.OnClickListene
         mFab.setImageDrawable(getResources().getDrawable((mIsFavorite ? R.drawable.filled_star : R.drawable.empty_star),null));
 
         if (mIsFavorite) {
-            //add to database
-            Uri uri = MovieContract.Movies.CONTENT_URI;
-            MovieProvider movieProvider = new MovieProvider(getActivity());
 
-
-            ContentValues valuesToAdd = new ContentValues();
-            valuesToAdd.put(MovieContract.Movies.MOVIE_ID, mMovie.id);
-            valuesToAdd.put(MovieContract.Movies.MOVIE_TITLE, mMovie.title);
-            valuesToAdd.put(MovieContract.Movies.MOVIE_OVERVIEW, mMovie.overview);
-            valuesToAdd.put(MovieContract.Movies.MOVIE_RATING, mMovie.rating);
-            valuesToAdd.put(MovieContract.Movies.MOVIE_POPULARITY, mMovie.popularity);
-            valuesToAdd.put(MovieContract.Movies.MOVIE_RELEASE_DATE, mMovie.release_date);
-            valuesToAdd.put(MovieContract.Movies.MOVIE_POSTER_PATH, mMovie.poster_path);
-
-            Uri newFavoriteUri = movieProvider.insertOnConflict(uri, valuesToAdd, SQLiteDatabase.CONFLICT_REPLACE);
-            if (DEBUG) Debug.LOGD(TAG, "item inserted into db at:" + newFavoriteUri.toString());
 
             //save image to disk
 
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
+                        //add to database
+                        Uri uri = MovieContract.Movies.CONTENT_URI;
+                        MovieProvider movieProvider = new MovieProvider(getActivity());
+
+
+                        ContentValues valuesToAdd = new ContentValues();
+                        valuesToAdd.put(MovieContract.Movies.MOVIE_ID, mMovie.id);
+                        valuesToAdd.put(MovieContract.Movies.MOVIE_TITLE, mMovie.title);
+                        valuesToAdd.put(MovieContract.Movies.MOVIE_OVERVIEW, mMovie.overview);
+                        valuesToAdd.put(MovieContract.Movies.MOVIE_RATING, mMovie.rating);
+                        valuesToAdd.put(MovieContract.Movies.MOVIE_POPULARITY, mMovie.popularity);
+                        valuesToAdd.put(MovieContract.Movies.MOVIE_RELEASE_DATE, mMovie.release_date);
+                        valuesToAdd.put(MovieContract.Movies.MOVIE_POSTER_PATH, mMovie.poster_path);
+
+                        Uri newFavoriteUri = movieProvider.insertOnConflict(uri, valuesToAdd, SQLiteDatabase.CONFLICT_REPLACE);
+                        if (DEBUG) Debug.LOGD(TAG, "item inserted into db at:" + newFavoriteUri.toString());
+
                         Bitmap posterAsBitmap = null;
                         try {
                             String imageUrl = TMDB_ApiHandler.getImageRequestUrl(mMovie.poster_path, TMDB_ApiHandler.TMDBImageSize.m);

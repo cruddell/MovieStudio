@@ -1,6 +1,10 @@
 package com.ruddell.moviestudio.util;
 
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.Network;
+import android.net.NetworkInfo;
 import android.util.Log;
 
 import java.io.BufferedReader;
@@ -29,6 +33,14 @@ public class TMDB_ApiHandler {
         return mBaseUrl + imageSize + "/" + imagename;
     }
 
+    public static boolean networkIsAvailable(Context context) {
+
+        ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+        return networkInfo!=null && networkInfo.isConnected();
+
+    }
+
     public static String getImageRequestUrl(String posterPath, String imageSize) {
         return mImageRequestBaseUrl + imageSize + "/" + posterPath;
     }
@@ -50,7 +62,8 @@ public class TMDB_ApiHandler {
     }
 
     public static String getMovieDiscoveryUrl(boolean byPopularity, boolean descending) {
-        return mBaseUrl + "discover/movie?sort_by=" + (byPopularity ? "popularity" : "vote_average") + (descending ? ".desc" : ".asc") + "&api_key=" + getApiKey();
+        return mBaseUrl + (byPopularity ? "movie/popular" : "movie/top_rated") + "?api_key=" + getApiKey();
+//        return mBaseUrl + "discover/movie?sort_by=" + (byPopularity ? "popularity" : "vote_average") + (descending ? ".desc" : ".asc") + "&api_key=" + getApiKey();
     }
 
     public interface TMDBImageSize {
